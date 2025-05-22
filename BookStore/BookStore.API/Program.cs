@@ -1,6 +1,10 @@
 using BookStore.BookStore.API.Data;
 using Microsoft.EntityFrameworkCore;
 
+
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure services
@@ -8,7 +12,16 @@ builder.Services.AddDbContext<BookStoreContext>(options =>
     options.UseSqlite("Data Source=bookstore.db"));
 builder.Services.AddControllers();
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 // Seed database (altid)
 DbInitializer.Seed(app);

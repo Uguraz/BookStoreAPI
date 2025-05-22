@@ -9,6 +9,8 @@ namespace BookStore.BookStore.API.Data
         {
             using var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<BookStoreContext>();
+            
+            context.Database.EnsureDeleted();
 
             context.Database.Migrate();
 

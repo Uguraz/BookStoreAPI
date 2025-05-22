@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BookStore.BookStore.API.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Newtonsoft.Json;
 using Xunit;
 

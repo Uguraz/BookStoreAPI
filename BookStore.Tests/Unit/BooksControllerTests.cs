@@ -24,6 +24,18 @@ namespace BookStore.Tests.Unit
             return context;
         }
 
+        
+        
+        static int CountFantasyBooks(List<Book> books)
+        {
+            int count = 0;
+            foreach (var book in books)
+            {
+                if (book.Genre == "Fantasy")
+                    count++;
+            }
+            return count;
+        }
 
         [Fact]
         public async Task GetBooks_ReturnsAllBooks()
@@ -477,7 +489,7 @@ namespace BookStore.Tests.Unit
                 var books = new List<Book>();
 
                 // Act
-                var result = _controller.CountFantasyBooks(books);
+                var result = CountFantasyBooks(books);
 
                 // Assert
                 Assert.Equal(0, result);
@@ -494,7 +506,7 @@ namespace BookStore.Tests.Unit
                 };
 
                 // Act
-                var result = _controller.CountFantasyBooks(books);
+                var result = CountFantasyBooks(books);
 
                 // Assert
                 Assert.Equal(0, result);
@@ -512,7 +524,7 @@ namespace BookStore.Tests.Unit
                 };
 
                 // Act
-                var result = _controller.CountFantasyBooks(books);
+                var result = CountFantasyBooks(books);
 
                 // Assert
                 Assert.Equal(2, result);

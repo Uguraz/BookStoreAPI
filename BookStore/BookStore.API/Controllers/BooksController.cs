@@ -188,16 +188,7 @@ public class BooksController : ControllerBase
             return Ok("Expensive");
     }
 
-    public int CountFantasyBooks(List<Book> books)
-    {
-        int count = 0;
-        foreach (var book in books)
-        {
-            if (book.Genre == "Fantasy")
-                count++;
-        }
-        return count;
-    }
+
 
 
 }

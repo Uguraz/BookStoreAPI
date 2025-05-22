@@ -1,124 +1,164 @@
-using System.Net;
 using System.Net.Http.Json;
+using BookStore.BookStore.API.Data;
+using BookStore.BookStore.API.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 using Reqnroll;
-using Assert = Xunit.Assert;
-using BookStore.BookStore.API.Models;
-using BookStore.BookStore.API.Data;
+
 
 namespace Bookstore.Test.Cucumber.MyReqnrollProject.StepDefinitions;
 
 [Binding]
-public sealed class OrderStepDefinitions
+public class OrderStepDefinitions
 {
-    private readonly WebApplicationFactory<Program> _factory;
-    private readonly HttpClient _client;
+    private HttpClient _client;
     private HttpResponseMessage _response;
-    private int _bookId;
-    private string _customerName = "";
-    private bool _bookIdIsValid = true;
-
-    public OrderStepDefinitions(WebApplicationFactory<Program> factory)
-    {
-        _factory = factory;
-        _client = _factory.CreateClient();
-    }
+    private WebApplicationFactory<Program> _factory;
+    private string _customerName;
 
     [BeforeScenario]
-    public async Task ClearOrdersBeforeEachScenario()
+    public void Setup()
+    {
+        _factory = new WebApplicationFactory<Program>();
+        _client = _factory.CreateClient();
+
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<BookStoreContext>();
+        db.Database.EnsureCreated();
+
+        db.Orders.RemoveRange(db.Orders);
+        db.Books.RemoveRange(db.Books);
+        db.SaveChanges();
+
+        db.Books.Add(new Book
+        {
+            Id = 101,
+            Title = "Test Book",
+            Author = "Test Author",
+            Genre = "Fantasy",
+            Price = 100
+        });
+
+        db.SaveChanges();
+    }
+
+    [AfterScenario]
+    public void TearDown()
+    {
+        _factory?.Dispose();
+        _client?.Dispose();
+    }
+
+    // Scenario: Creating a new order
+    [Given("a valid book with ID 101 exists")]
+    public void GivenValidBookExists()
     {
         using var scope = _factory.Services.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<BookStoreContext>(); // <-- Ændret her
-
-        dbContext.Orders.RemoveRange(dbContext.Orders);
-        await dbContext.SaveChangesAsync();
+        var db = scope.ServiceProvider.GetRequiredService<BookStoreContext>();
+    
+        var book = db.Books.Find(101);
+        Xunit.Assert.NotNull(book);
     }
 
-
-    [Given("the book ID is {int}")]
-    public void GivenTheBookIdIs(int id)
+    [Given("the customer name is Lasse")]
+    public void GivenCustomerNameIsLasse()
     {
-        _bookId = id;
-        _bookIdIsValid = true;
+        _customerName = "Lasse";
     }
 
-    [Given("the book ID is {string}")]
-    public void GivenTheBookIdIsString(string id)
+    [When("the order is submitted with book ID 101 and customer name Lasse")]
+    public async Task WhenOrderIsSubmittedWithValidData()
     {
-        if (int.TryParse(id, out var parsedId))
-        {
-            _bookId = parsedId;
-            _bookIdIsValid = true;
-        }
-        else
-        {
-            _bookIdIsValid = false;
-        }
+        var order = new Order { BookId = 101, CustomerName = "Lasse" };
+        _response = await _client.PostAsJsonAsync("/api/order", order);
     }
 
-    [Given("the customer name is {string}")]
-    public void GivenTheCustomerNameIs(string name)
+    [Then("the response status should be 201")]
+    public void ThenStatusShouldBe201()
     {
-        _customerName = name;
+        Xunit.Assert.Equal(201, (int)_response.StatusCode);
     }
 
-    [Given("the customer name is \"(.*)\" repeated (\\d+) times")]
-    public void GivenTheCustomerNameIsRepeated(string name, int times)
+    // Scenario: Creating an order with an invalid book ID
+    [Given("the customer name is Lasse for an invalid book ID")]
+    public void GivenCustomerNameForInvalidBook()
     {
-        _customerName = string.Concat(Enumerable.Repeat(name, times));
+        _customerName = "Lasse";
+    }
+
+    [When("the order is submitted with book ID -1 and customer name Lasse")]
+    public async Task WhenOrderSubmittedInvalidBookId()
+    {
+        var order = new Order { BookId = -1, CustomerName = "Lasse" };
+        _response = await _client.PostAsJsonAsync("/api/order", order);
+    }
+
+    [Then("the response status should be 404")]
+    public void ThenStatusShouldBe404()
+    {
+        Xunit.Assert.Equal(404, (int)_response.StatusCode);
+    }
+
+    // Scenario: Creating an order with a missing customer name
+    
+    // Given a valid book with ID 101 exists reused from Creating a new order
+    
+    [When("the order is submitted with book ID 101 and empty customer name")]
+    public async Task WhenOrderSubmittedWithEmptyName()
+    {
+        var order = new Order { BookId = 101, CustomerName = "" };
+        _response = await _client.PostAsJsonAsync("/api/order", order);
+    }
+
+    [Then("the response status should be 400")]
+    public void ThenStatusShouldBe400()
+    {
+        Xunit.Assert.Equal(400, (int)_response.StatusCode);
+    }
+
+    // Scenario: Creating an order with a duplicate request
+    [Given("the customer name is Lasse for duplicate request")]
+    public void GivenCustomerNameForDuplicate()
+    {
+        _customerName = "Lasse";
     }
 
     [Given("the order has already been submitted")]
-    public async Task GivenTheOrderHasAlreadyBeenSubmitted()
+    public async Task GivenOrderAlreadySubmitted()
     {
-        if (!_bookIdIsValid) return;
+        var order = new Order { BookId = 101, CustomerName = "Lasse" };
+        await _client.PostAsJsonAsync("/api/order", order);
+    }
 
-        var order = new Order
-        {
-            BookId = _bookId,
-            CustomerName = _customerName
-        };
+    [When("the duplicate order is submitted")]
+    public async Task WhenDuplicateOrderSubmitted()
+    {
+        var order = new Order { BookId = 101, CustomerName = "Lasse" };
+        _response = await _client.PostAsJsonAsync("/api/order", order);
+    }
 
-        await _client.PostAsJsonAsync("/api/Order", order);
+    [Then("the response status should be 409")]
+    public void ThenStatusShouldBe409()
+    {
+        Xunit.Assert.Equal(409, (int)_response.StatusCode);
+    }
+
+    // Scenario: Creating an order with a very long customer name
+    [Given("the customer name is Lasse repeated 50 times")]
+    public void GivenCustomerNameIsLong()
+    {
+        _customerName = string.Concat(Enumerable.Repeat("Lasse", 50));
     }
 
     [When("the order is submitted")]
-    public async Task WhenTheOrderIsSubmitted()
+    public async Task WhenOrderSubmittedWithLongName()
     {
-        if (!_bookIdIsValid)
-        {
-            // Send rå JSON med ugyldigt bookId
-            var orderJson = new
-            {
-                BookId = "INVALID",
-                CustomerName = _customerName
-            };
-
-            _response = await _client.PostAsJsonAsync("/api/Order", orderJson);
-            return;
-        }
-
-        var order = new Order
-        {
-            BookId = _bookId,
-            CustomerName = _customerName
-        };
-
-        _response = await _client.PostAsJsonAsync("/api/Order", order);
+       
+        var order = new Order { BookId = 101, CustomerName = _customerName };
+        _response = await _client.PostAsJsonAsync("/api/order", order);
     }
+    
+    // Then Response status 400 reused from Creating an order with a duplicate request
 
-    [Then("the response status should be {int}")]
-    public void ThenTheResponseStatusShouldBe(int statusCode)
-    {
-        Assert.Equal((HttpStatusCode)statusCode, _response.StatusCode);
-    }
-
-    [Then("the response should contain error message {string}")]
-    public async Task ThenTheResponseShouldContainErrorMessage(string expectedMessage)
-    {
-        var content = await _response.Content.ReadAsStringAsync();
-        Assert.Contains(expectedMessage, content);
-    }
+ 
 }

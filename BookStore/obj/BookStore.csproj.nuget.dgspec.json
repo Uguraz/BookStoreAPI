@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lasse\\RiderProjects\\BookStore\\BookStore\\BookStore.csproj": {}
+    "C:\\Users\\SW\\RiderProjects\\BookStoreAPI\\BookStore\\BookStore.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lasse\\RiderProjects\\BookStore\\BookStore\\BookStore.csproj": {
+    "C:\\Users\\SW\\RiderProjects\\BookStoreAPI\\BookStore\\BookStore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lasse\\RiderProjects\\BookStore\\BookStore\\BookStore.csproj",
+        "projectUniqueName": "C:\\Users\\SW\\RiderProjects\\BookStoreAPI\\BookStore\\BookStore.csproj",
         "projectName": "BookStore",
-        "projectPath": "C:\\Users\\lasse\\RiderProjects\\BookStore\\BookStore\\BookStore.csproj",
-        "packagesPath": "C:\\Users\\lasse\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lasse\\RiderProjects\\BookStore\\BookStore\\obj\\",
+        "projectPath": "C:\\Users\\SW\\RiderProjects\\BookStoreAPI\\BookStore\\BookStore.csproj",
+        "packagesPath": "C:\\Users\\SW\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\SW\\RiderProjects\\BookStoreAPI\\BookStore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\lasse\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\SW\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -43,6 +43,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Mvc.Testing": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.5, )"
@@ -95,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

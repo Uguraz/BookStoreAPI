@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using BookStore.API.Data;
+
 
 #nullable disable
 

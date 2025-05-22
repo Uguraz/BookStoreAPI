@@ -47,6 +47,22 @@
           }
         }
       },
+      "Castle.Core/5.1.1": {
+        "type": "package",
+        "dependencies": {
+          "System.Diagnostics.EventLog": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Castle.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Castle.Core.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "coverlet.collector/6.0.0": {
         "type": "package",
         "build": {
@@ -282,6 +298,24 @@
       },
       "Microsoft.EntityFrameworkCore.Analyzers/9.0.5": {
         "type": "package"
+      },
+      "Microsoft.EntityFrameworkCore.InMemory/9.0.5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "9.0.5",
+          "Microsoft.Extensions.Caching.Memory": "9.0.5",
+          "Microsoft.Extensions.Logging": "9.0.5"
+        },
+        "compile": {
+          "lib/net8.0/Microsoft.EntityFrameworkCore.InMemory.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.EntityFrameworkCore.InMemory.dll": {
+            "related": ".xml"
+          }
+        }
       },
       "Microsoft.EntityFrameworkCore.Relational/9.0.5": {
         "type": "package",
@@ -1488,6 +1522,18 @@
           }
         }
       },
+      "Moq/4.20.72": {
+        "type": "package",
+        "dependencies": {
+          "Castle.Core": "5.1.1"
+        },
+        "compile": {
+          "lib/net6.0/Moq.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Moq.dll": {}
+        }
+      },
       "NETStandard.Library/2.0.0": {
         "type": "package",
         "dependencies": {
@@ -2401,6 +2447,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Testing": "8.0.0",
           "Microsoft.AspNetCore.OpenApi": "8.0.5",
           "Microsoft.EntityFrameworkCore": "9.0.5",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.5",
@@ -2456,6 +2503,30 @@
         "azureicon.png",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
+      ]
+    },
+    "Castle.Core/5.1.1": {
+      "sha512": "rpYtIczkzGpf+EkZgDr9CClTdemhsrwA/W5hMoPjLkRFnXzH44zDLoovXeKtmxb1ykXK9aJVODSpiJml8CTw2g==",
+      "type": "package",
+      "path": "castle.core/5.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ASL - Apache Software Foundation License.txt",
+        "CHANGELOG.md",
+        "LICENSE",
+        "castle-logo.png",
+        "castle.core.5.1.1.nupkg.sha512",
+        "castle.core.nuspec",
+        "lib/net462/Castle.Core.dll",
+        "lib/net462/Castle.Core.xml",
+        "lib/net6.0/Castle.Core.dll",
+        "lib/net6.0/Castle.Core.xml",
+        "lib/netstandard2.0/Castle.Core.dll",
+        "lib/netstandard2.0/Castle.Core.xml",
+        "lib/netstandard2.1/Castle.Core.dll",
+        "lib/netstandard2.1/Castle.Core.xml",
+        "readme.txt"
       ]
     },
     "coverlet.collector/6.0.0": {
@@ -2886,6 +2957,21 @@
         "docs/PACKAGE.md",
         "microsoft.entityframeworkcore.analyzers.9.0.5.nupkg.sha512",
         "microsoft.entityframeworkcore.analyzers.nuspec"
+      ]
+    },
+    "Microsoft.EntityFrameworkCore.InMemory/9.0.5": {
+      "sha512": "+nC0uyM5ztN3rV7yUraTlQhXZMV98MP1ZEn4OLlz4c0l5bOGbvHIcvsHA5RitzJTsP5UX/rwfpc3aOsTBS02jA==",
+      "type": "package",
+      "path": "microsoft.entityframeworkcore.inmemory/9.0.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "lib/net8.0/Microsoft.EntityFrameworkCore.InMemory.dll",
+        "lib/net8.0/Microsoft.EntityFrameworkCore.InMemory.xml",
+        "microsoft.entityframeworkcore.inmemory.9.0.5.nupkg.sha512",
+        "microsoft.entityframeworkcore.inmemory.nuspec"
       ]
     },
     "Microsoft.EntityFrameworkCore.Relational/9.0.5": {
@@ -4595,6 +4681,23 @@
         "runtimes/win/lib/netcoreapp3.1/Microsoft.Win32.SystemEvents.dll",
         "runtimes/win/lib/netcoreapp3.1/Microsoft.Win32.SystemEvents.xml",
         "useSharedDesignerContext.txt"
+      ]
+    },
+    "Moq/4.20.72": {
+      "sha512": "EA55cjyNn8eTNWrgrdZJH5QLFp2L43oxl1tlkoYUKIE9pRwL784OWiTXeCV5ApS+AMYEAlt7Fo03A2XfouvHmQ==",
+      "type": "package",
+      "path": "moq/4.20.72",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net462/Moq.dll",
+        "lib/net6.0/Moq.dll",
+        "lib/netstandard2.0/Moq.dll",
+        "lib/netstandard2.1/Moq.dll",
+        "moq.4.20.72.nupkg.sha512",
+        "moq.nuspec",
+        "readme.md"
       ]
     },
     "NETStandard.Library/2.0.0": {
@@ -6415,7 +6518,9 @@
     "net8.0": [
       "BookStore >= 1.0.0",
       "Microsoft.AspNetCore.Mvc.Testing >= 8.0.0",
+      "Microsoft.EntityFrameworkCore.InMemory >= 9.0.5",
       "Microsoft.NET.Test.Sdk >= 17.8.0",
+      "Moq >= 4.20.72",
       "NUnit >= 3.14.0",
       "NUnit.Analyzers >= 3.9.0",
       "NUnit3TestAdapter >= 4.5.0",
@@ -6426,19 +6531,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lasse\\.nuget\\packages\\": {}
+    "C:\\Users\\SW\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lasse\\RiderProjects\\BookStore\\Bookstore.Test.Cucumber\\Bookstore.Test.Cucumber.csproj",
+      "projectUniqueName": "C:\\Users\\SW\\RiderProjects\\BookStoreAPI\\Bookstore.Test.Cucumber\\Bookstore.Test.Cucumber.csproj",
       "projectName": "Bookstore.Test.Cucumber",
-      "projectPath": "C:\\Users\\lasse\\RiderProjects\\BookStore\\Bookstore.Test.Cucumber\\Bookstore.Test.Cucumber.csproj",
-      "packagesPath": "C:\\Users\\lasse\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lasse\\RiderProjects\\BookStore\\Bookstore.Test.Cucumber\\obj\\",
+      "projectPath": "C:\\Users\\SW\\RiderProjects\\BookStoreAPI\\Bookstore.Test.Cucumber\\Bookstore.Test.Cucumber.csproj",
+      "packagesPath": "C:\\Users\\SW\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\SW\\RiderProjects\\BookStoreAPI\\Bookstore.Test.Cucumber\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\lasse\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\SW\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -6450,8 +6555,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\lasse\\RiderProjects\\BookStore\\BookStore\\BookStore.csproj": {
-              "projectPath": "C:\\Users\\lasse\\RiderProjects\\BookStore\\BookStore\\BookStore.csproj"
+            "C:\\Users\\SW\\RiderProjects\\BookStoreAPI\\BookStore\\BookStore.csproj": {
+              "projectPath": "C:\\Users\\SW\\RiderProjects\\BookStoreAPI\\BookStore\\BookStore.csproj"
             }
           }
         }
@@ -6475,9 +6580,17 @@
             "target": "Package",
             "version": "[8.0.0, )"
           },
+          "Microsoft.EntityFrameworkCore.InMemory": {
+            "target": "Package",
+            "version": "[9.0.5, )"
+          },
           "Microsoft.NET.Test.Sdk": {
             "target": "Package",
             "version": "[17.8.0, )"
+          },
+          "Moq": {
+            "target": "Package",
+            "version": "[4.20.72, )"
           },
           "NUnit": {
             "target": "Package",
@@ -6524,7 +6637,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

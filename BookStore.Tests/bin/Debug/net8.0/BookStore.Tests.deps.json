@@ -1948,7 +1948,10 @@
           "Swashbuckle.AspNetCore": "6.4.0"
         },
         "runtime": {
-          "BookStore.dll": {}
+          "BookStore.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         },
         "compile": {
           "BookStore.dll": {}
