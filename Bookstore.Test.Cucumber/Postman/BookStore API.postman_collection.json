@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "4e825841-edfd-4720-92ec-20a9a6e3ca57",
+		"name": "BookStore API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45122246",
+		"_collection_link": "https://lassejensen-3469996.postman.co/workspace/Lasse-Jensen's-Workspace~647109d8-d3ad-40a4-8dc2-a5c808f9b9f7/collection/45122246-4e825841-edfd-4720-92ec-20a9a6e3ca57?action=share&source=collection_link&creator=45122246"
+	},
+	"item": [
+		{
+			"name": "Get all books",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5228/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5228",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get book by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5228/api/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5228",
+					"path": [
+						"api",
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a book",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": 1,\n  \"title\": \"Updated Title\",\n  \"author\": \"Jane Doe\",\n  \"genre\": \"Thriller\",\n  \"price\": 149.99\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5228/api/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5228",
+					"path": [
+						"api",
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a book",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5228/api/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5228",
+					"path": [
+						"api",
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new book",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Test Book\",\n  \"author\": \"Jane Doe\",\n  \"genre\": \"Fantasy\",\n  \"price\": 199.99\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5228/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5228",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
