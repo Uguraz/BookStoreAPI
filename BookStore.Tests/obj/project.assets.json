@@ -1518,6 +1518,19 @@
           "lib/net6.0/Moq.dll": {}
         }
       },
+      "Moq.EntityFrameworkCore/9.0.0.5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "9.0.0",
+          "Moq": "4.20.70"
+        },
+        "compile": {
+          "lib/net8.0/Moq.EntityFrameworkCore.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/Moq.EntityFrameworkCore.dll": {}
+        }
+      },
       "Newtonsoft.Json/13.0.1": {
         "type": "package",
         "compile": {
@@ -2312,6 +2325,7 @@
           "Microsoft.EntityFrameworkCore": "9.0.5",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.5",
           "Microsoft.EntityFrameworkCore.Sqlite": "9.0.5",
+          "Moq.EntityFrameworkCore": "9.0.0.5",
           "Swashbuckle.AspNetCore": "6.4.0"
         },
         "compile": {
@@ -4498,6 +4512,19 @@
         "moq.4.20.72.nupkg.sha512",
         "moq.nuspec",
         "readme.md"
+      ]
+    },
+    "Moq.EntityFrameworkCore/9.0.0.5": {
+      "sha512": "9Vihf1nHittiT4rdsBGnModjNpGdgKmJRlALGczqFopRzVedVWzahcpulQ4VgCovo8Nlt9PgfkKBCHm1WTXdhA==",
+      "type": "package",
+      "path": "moq.entityframeworkcore/9.0.0.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net8.0/Moq.EntityFrameworkCore.dll",
+        "moq.entityframeworkcore.9.0.0.5.nupkg.sha512",
+        "moq.entityframeworkcore.nuspec"
       ]
     },
     "Newtonsoft.Json/13.0.1": {

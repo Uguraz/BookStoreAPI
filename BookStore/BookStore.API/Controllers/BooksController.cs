@@ -1,7 +1,6 @@
-﻿using BookStore.BookStore.API.Data;
-using BookStore.BookStore.API.Models;
+﻿using BookStore.BookStore.API.Models;
+using BookStore.BookStore.API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.BookStore.API.Controllers;
 
@@ -9,66 +8,52 @@ namespace BookStore.BookStore.API.Controllers;
 [ApiController]
 public class BooksController : ControllerBase
 {
-    private readonly BookStoreContext _context;
+    private readonly IRepository<Book> _bookRepository;
 
-    public BooksController(BookStoreContext context)
+    public BooksController(IRepository<Book> bookRepository)
     {
-        _context = context;
+        _bookRepository = bookRepository;
     }
 
-    
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
     {
-        var books = await _context.Books.ToListAsync();
-        return Ok(books); 
+        var books = await _bookRepository.GetAllAsync();
+        return Ok(books);
     }
 
-
-    // GET: api/books/
     [HttpGet("{id}")]
     public async Task<ActionResult<Book>> GetBook(int id)
     {
-        var book = await _context.Books.FindAsync(id);
-
+        var book = await _bookRepository.GetAsync(id);
         if (book == null)
             return NotFound();
-
-        return Ok(book); 
+        return Ok(book);
     }
-    
-    // POST: api/books/
+
     [HttpPost]
     public async Task<ActionResult<Book>> PostBook(Book book)
     {
         if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState); 
-        }
+            return BadRequest(ModelState);
 
-        _context.Books.Add(book);
-        await _context.SaveChangesAsync();
-
+        await _bookRepository.AddAsync(book);
         return CreatedAtAction(nameof(GetBook), new { id = book.Id }, book);
     }
 
-
-    // PUT: api/books/
     [HttpPut("{id}")]
     public async Task<IActionResult> PutBook(int id, Book book)
     {
         if (id != book.Id)
             return BadRequest();
 
-        _context.Entry(book).State = EntityState.Modified;
-
         try
         {
-            await _context.SaveChangesAsync();
+            await _bookRepository.EditAsync(book);
         }
-        catch (DbUpdateConcurrencyException)
+        catch
         {
-            if (!await BookExists(id))
+            if (await _bookRepository.GetAsync(id) == null)
                 return NotFound();
             else
                 throw;
@@ -77,29 +62,19 @@ public class BooksController : ControllerBase
         return NoContent();
     }
 
-    // DELETE: api/books/
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteBook(int id)
     {
-        var book = await _context.Books.FindAsync(id);
-
+        var book = await _bookRepository.GetAsync(id);
         if (book == null)
             return NotFound();
 
-        _context.Books.Remove(book);
-        await _context.SaveChangesAsync();
-
+        await _bookRepository.RemoveAsync(id);
         return NoContent();
     }
 
-    private async Task<bool> BookExists(int id)
-    {
-        return await _context.Books.AnyAsync(e => e.Id == id);
-    }
-    
-    // Returnerer antal bøger pr. genre (kun for kendte genrer)
     [HttpGet("genre-counts")]
-    public ActionResult<Dictionary<string, int>> GetBookCountsByGenre()
+    public async Task<ActionResult<Dictionary<string, int>>> GetBookCountsByGenre()
     {
         var knownGenres = new[]
         {
@@ -107,22 +82,17 @@ public class BooksController : ControllerBase
             "Mystery", "Horror", "Non-Fiction", "Biography", "Adventure"
         };
 
-        var counts = new Dictionary<string, int>();
-
-        foreach (var genre in knownGenres)
-        {
-            int count = _context.Books.Count(b => b.Genre == genre);
-            if (count > 0)
-            {
-                counts[genre] = count;
-            }
-        }
+        var books = await _bookRepository.GetAllAsync();
+        var counts = knownGenres
+            .Select(g => new { Genre = g, Count = books.Count(b => b.Genre == g) })
+            .Where(g => g.Count > 0)
+            .ToDictionary(g => g.Genre, g => g.Count);
 
         return Ok(counts);
     }
-    
+
     [HttpGet("count-by-author")]
-    public ActionResult<Dictionary<string, int>> GetBookCountByAuthor()
+    public async Task<ActionResult<Dictionary<string, int>>> GetBookCountByAuthor()
     {
         var authors = new[]
         {
@@ -134,22 +104,17 @@ public class BooksController : ControllerBase
             "Suzanne Collins", "Rick Riordan", "Margaret Atwood", "Colleen Hoover", "James Patterson"
         };
 
-        var result = new Dictionary<string, int>();
-
-        foreach (var author in authors)
-        {
-            int count = _context.Books.Count(b => b.Author == author);
-            if (count > 0)
-            {
-                result[author] = count;
-            }
-        }
+        var books = await _bookRepository.GetAllAsync();
+        var result = authors
+            .Select(a => new { Author = a, Count = books.Count(b => b.Author == a) })
+            .Where(a => a.Count > 0)
+            .ToDictionary(a => a.Author, a => a.Count);
 
         return Ok(result);
     }
 
     [HttpGet("count-by-title")]
-    public ActionResult<Dictionary<string, int>> GetBookCountByTitle()
+    public async Task<ActionResult<Dictionary<string, int>>> GetBookCountByTitle()
     {
         var titles = new[]
         {
@@ -163,16 +128,11 @@ public class BooksController : ControllerBase
             "Call of the Wild", "Whirlwind", "Edge of Reality", "Golden Horizon", "Moonlit Veins"
         };
 
-        var result = new Dictionary<string, int>();
-
-        foreach (var title in titles)
-        {
-            int count = _context.Books.Count(b => b.Title == title);
-            if (count > 0)
-            {
-                result[title] = count;
-            }
-        }
+        var books = await _bookRepository.GetAllAsync();
+        var result = titles
+            .Select(t => new { Title = t, Count = books.Count(b => b.Title == t) })
+            .Where(t => t.Count > 0)
+            .ToDictionary(t => t.Title, t => t.Count);
 
         return Ok(result);
     }
@@ -182,13 +142,9 @@ public class BooksController : ControllerBase
     {
         if (price < 50)
             return Ok("Cheap");
-        else if (price >= 50 && price <= 150)
+        else if (price <= 150)
             return Ok("Moderate");
         else
             return Ok("Expensive");
     }
-
-
-
-
 }

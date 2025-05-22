@@ -971,3 +971,4 @@ C:\Users\SW\RiderProjects\BookStoreAPI\BookStore.Tests\obj\Debug\net8.0\refint\B
 C:\Users\SW\RiderProjects\BookStoreAPI\BookStore.Tests\obj\Debug\net8.0\BookStore.Tests.pdb
 C:\Users\SW\RiderProjects\BookStoreAPI\BookStore.Tests\obj\Debug\net8.0\BookStore.Tests.genruntimeconfig.cache
 C:\Users\SW\RiderProjects\BookStoreAPI\BookStore.Tests\obj\Debug\net8.0\ref\BookStore.Tests.dll
+C:\Users\SW\RiderProjects\BookStoreAPI\BookStore.Tests\bin\Debug\net8.0\Moq.EntityFrameworkCore.dll

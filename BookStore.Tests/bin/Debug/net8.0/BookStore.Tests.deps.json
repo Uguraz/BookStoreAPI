@@ -1418,6 +1418,21 @@
           "lib/net6.0/Moq.dll": {}
         }
       },
+      "Moq.EntityFrameworkCore/9.0.0.5": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "9.0.5",
+          "Moq": "4.20.72"
+        },
+        "runtime": {
+          "lib/net8.0/Moq.EntityFrameworkCore.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.2.0"
+          }
+        },
+        "compile": {
+          "lib/net8.0/Moq.EntityFrameworkCore.dll": {}
+        }
+      },
       "Newtonsoft.Json/13.0.1": {
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {
@@ -1941,10 +1956,12 @@
       "xunit.runner.visualstudio/3.1.0": {},
       "BookStore/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Testing": "8.0.0",
           "Microsoft.AspNetCore.OpenApi": "8.0.5",
           "Microsoft.EntityFrameworkCore": "9.0.5",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.5",
           "Microsoft.EntityFrameworkCore.Sqlite": "9.0.5",
+          "Moq.EntityFrameworkCore": "9.0.0.5",
           "Swashbuckle.AspNetCore": "6.4.0"
         },
         "runtime": {
@@ -4175,6 +4192,13 @@
       "sha512": "sha512-EA55cjyNn8eTNWrgrdZJH5QLFp2L43oxl1tlkoYUKIE9pRwL784OWiTXeCV5ApS+AMYEAlt7Fo03A2XfouvHmQ==",
       "path": "moq/4.20.72",
       "hashPath": "moq.4.20.72.nupkg.sha512"
+    },
+    "Moq.EntityFrameworkCore/9.0.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9Vihf1nHittiT4rdsBGnModjNpGdgKmJRlALGczqFopRzVedVWzahcpulQ4VgCovo8Nlt9PgfkKBCHm1WTXdhA==",
+      "path": "moq.entityframeworkcore/9.0.0.5",
+      "hashPath": "moq.entityframeworkcore.9.0.0.5.nupkg.sha512"
     },
     "Newtonsoft.Json/13.0.1": {
       "type": "package",

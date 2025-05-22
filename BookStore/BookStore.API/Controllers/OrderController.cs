@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BookStore.BookStore.API.Data;
 using BookStore.BookStore.API.Models;
-using Microsoft.EntityFrameworkCore;
+using BookStore.BookStore.API.Interfaces;
 
 namespace BookStore.BookStore.API.Controllers
 {
@@ -9,58 +8,54 @@ namespace BookStore.BookStore.API.Controllers
     [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
-        private readonly BookStoreContext _context;
+        private readonly IRepository<Order> _orderRepo;
+        private readonly IRepository<Book> _bookRepo;
 
-        public OrderController(BookStoreContext context)
+        public OrderController(IRepository<Order> orderRepo, IRepository<Book> bookRepo)
         {
-            _context = context;
+            _orderRepo = orderRepo;
+            _bookRepo = bookRepo;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-            return await _context.Orders.ToListAsync();
+            var orders = await _orderRepo.GetAllAsync();
+            return Ok(orders);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetOrder(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _orderRepo.GetAsync(id);
             if (order == null) return NotFound();
-            return order;
+            return Ok(order);
         }
 
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
-            // Tjek om bogen findes
-            var bookExists = await _context.Books.AnyAsync(b => b.Id == order.BookId);
+            var books = await _bookRepo.GetAllAsync();
+            bool bookExists = books.Any(b => b.Id == order.BookId);
             if (!bookExists)
                 return NotFound($"Book with ID {order.BookId} not found.");
 
-            // Tjek for duplikeret ordre
-            var duplicateOrder = await _context.Orders
-                .AnyAsync(o => o.BookId == order.BookId && o.CustomerName == order.CustomerName);
-
+            var orders = await _orderRepo.GetAllAsync();
+            bool duplicateOrder = orders.Any(o => o.BookId == order.BookId && o.CustomerName == order.CustomerName);
             if (duplicateOrder)
                 return Conflict("An order with the same book and customer already exists.");
 
-            // Opret ny ordre
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
-
+            await _orderRepo.AddAsync(order);
             return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, order);
         }
-
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _orderRepo.GetAsync(id);
             if (order == null) return NotFound();
 
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
+            await _orderRepo.RemoveAsync(id);
             return NoContent();
         }
     }

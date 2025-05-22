@@ -183,6 +183,10 @@
               "target": "Package",
               "version": "[9.0.5, )"
             },
+            "Moq.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.0.5, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"

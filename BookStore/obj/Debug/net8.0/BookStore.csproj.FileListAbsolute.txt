@@ -969,3 +969,6 @@ C:\Users\SW\RiderProjects\BookStoreAPI\BookStore\bin\Debug\net8.0\MvcTestingAppM
 C:\Users\SW\RiderProjects\BookStoreAPI\BookStore\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.Testing.dll
 C:\Users\SW\RiderProjects\BookStoreAPI\BookStore\bin\Debug\net8.0\Microsoft.AspNetCore.TestHost.dll
 C:\Users\SW\RiderProjects\BookStoreAPI\BookStore\obj\Debug\net8.0\MvcTestingAppManifest.json
+C:\Users\SW\RiderProjects\BookStoreAPI\BookStore\bin\Debug\net8.0\Castle.Core.dll
+C:\Users\SW\RiderProjects\BookStoreAPI\BookStore\bin\Debug\net8.0\Moq.dll
+C:\Users\SW\RiderProjects\BookStoreAPI\BookStore\bin\Debug\net8.0\Moq.EntityFrameworkCore.dll

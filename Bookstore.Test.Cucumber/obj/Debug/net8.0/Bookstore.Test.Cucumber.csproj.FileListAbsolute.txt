@@ -992,3 +992,4 @@ C:\Users\SW\RiderProjects\BookStoreAPI\Bookstore.Test.Cucumber\obj\Debug\net8.0\
 C:\Users\SW\RiderProjects\BookStoreAPI\Bookstore.Test.Cucumber\bin\Debug\net8.0\Castle.Core.dll
 C:\Users\SW\RiderProjects\BookStoreAPI\Bookstore.Test.Cucumber\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.InMemory.dll
 C:\Users\SW\RiderProjects\BookStoreAPI\Bookstore.Test.Cucumber\bin\Debug\net8.0\Moq.dll
+C:\Users\SW\RiderProjects\BookStoreAPI\Bookstore.Test.Cucumber\bin\Debug\net8.0\Moq.EntityFrameworkCore.dll

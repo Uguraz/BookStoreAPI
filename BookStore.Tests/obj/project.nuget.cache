@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "s9n9zi07nes=",
+  "dgSpecHash": "UV8UMTEpRk8=",
   "success": true,
   "projectFilePath": "C:\\Users\\SW\\RiderProjects\\BookStoreAPI\\BookStore.Tests\\BookStore.Tests.csproj",
   "expectedPackageFiles": [
@@ -73,6 +73,7 @@
     "C:\\Users\\SW\\.nuget\\packages\\microsoft.testplatform.testhost\\17.13.0\\microsoft.testplatform.testhost.17.13.0.nupkg.sha512",
     "C:\\Users\\SW\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\SW\\.nuget\\packages\\moq\\4.20.72\\moq.4.20.72.nupkg.sha512",
+    "C:\\Users\\SW\\.nuget\\packages\\moq.entityframeworkcore\\9.0.0.5\\moq.entityframeworkcore.9.0.0.5.nupkg.sha512",
     "C:\\Users\\SW\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\SW\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.1.10\\sqlitepclraw.bundle_e_sqlite3.2.1.10.nupkg.sha512",
     "C:\\Users\\SW\\.nuget\\packages\\sqlitepclraw.core\\2.1.10\\sqlitepclraw.core.2.1.10.nupkg.sha512",

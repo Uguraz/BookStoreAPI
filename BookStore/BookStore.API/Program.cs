@@ -1,4 +1,5 @@
 using BookStore.BookStore.API.Data;
+using BookStore.BookStore.API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -11,6 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BookStoreContext>(options =>
     options.UseSqlite("Data Source=bookstore.db"));
 builder.Services.AddControllers();
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
